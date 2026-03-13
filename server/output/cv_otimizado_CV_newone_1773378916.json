@@ -1,0 +1,42 @@
+{
+  "pt_br": {
+    "personal_info": {"name": "ELIAS RODRIGUES DE OLIVEIRA FILHO", "email": "", "phone": "", "linkedin": ""},
+    "summary": "Este currículo contém critérios importantes e habilidades que se enquadram fortemente nas exigências do cargo, tornando-o adequado para o processo de seleção por IA.",
+    "experience": [
+      {
+        "company": "Nome da Empresa",
+        "role": "Cargo",
+        "period": "Mês/Ano - Mês/Ano",
+        "bullets": ["Verbo de ação + Tarefa + Resultado alcançado"]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Instituição",
+        "course": "Curso/Grau",
+        "period": "Ano"
+      }
+    ],
+    "skills": ["Habilidade 1", "Habilidade 2"]
+  },
+  "us_eng": {
+    "personal_info": {"name": "ELIAS RODRIGUES DE OLIVEIRA FILHO", "email": "", "phone": "", "linkedin": ""},
+    "summary": "This resume includes important criteria and skills that are a strong match for the job requirements, making it suitable for AI screening.",
+    "experience": [
+      {
+        "company": "Company Name",
+        "role": "Job Title",
+        "period": "Month/Year - Month/Year",
+        "bullets": ["Action verb + Task + Result achieved"]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Institution",
+        "course": "Course/Degree",
+        "period": "Year"
+      }
+    ],
+    "skills": ["Skill 1", "Skill 2"]
+  }
+}

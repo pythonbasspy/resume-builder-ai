@@ -1,0 +1,120 @@
+{
+  "pt_br": {
+    "personal_info": {"name": "ELIAS RODRIGUES DE OLIVEIRA FILHO", "email": "eliasr.of1986@gmail.com", "phone": "994724263", "linkedin": ""},
+    "summary": "Enfermeiro experiente em gestão de projetos, incluindo ensaios clínicos e gerenciamento de equipes. Proficiente em inglês com habilidades em gestão técnica e entrega de projetos de alta qualidade.",
+    "experience": [
+      {
+        "company": "Projeto CUIDA Chagas/Fiocruz",
+        "role": "Gerente de Ensaios Clínicos",
+        "period": "Out/2021 - Out/2022",
+        "bullets": [
+          "Liderei um ensaio clínico multicêntrico internacional no Brasil, Colômbia e Bolívia.",
+          "Gerenciamento de orçamento multimilionário para a iniciativa de saúde global.",
+          "Desenvolvi e implementei protocolos e listas de verificação de controle de qualidade.",
+          "Coordenou equipe multicultural usando metodologias ágeis.",
+          "Estabeleceu processos padronizados em três países e executou o ciclo de vida do projeto supervisionado de ponta a ponta."
+        ]
+      },
+      {
+        "company": "CIDP do Brasil",
+        "role": "Analista Sr. de Ensaios Clínicos",
+        "period": "Nov/2020 - Out/2021",
+        "bullets": [
+          "Supervisão e estruturação de equipes para condução de estudos dermatológicos.",
+          "Elaboração e gestão de toda a documentação conforme BPC.",
+          "Expertise na tradução de documentos essenciais, garantindo precisão e comunicação global/regulatória.",
+          "Análise de compliance e follow-up de estudos clínicos."
+        ]
+      },
+      {
+        "company": "ReBEC/FIOCRUZ",
+        "role": "Gerente de Revisão",
+        "period": "Ago/2014 - Abr/2019",
+        "bullets": [
+          "Liderança de processos de curadoria de ensaios clínicos.",
+          "Gerenciamento de uma equipe multidisciplinar.",
+          "Resolução de demanda do cliente com suporte omnichannel.",
+          "Sucesso no zerbimento do backlog de ensaios clínicos.",
+          "Desenvolvimento de Procedimentos Operacionais Padrão e coordenação de eventos internos."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "IBMR, Rio de Janeiro",
+        "course": "Bacharelado em Enfermagem",
+        "period": "2018"
+      }
+    ],
+    "skills": [
+      "Engenharia de prompt",
+      "Vibe Coding (JS, Python, Flutter, Next.js, React, Postgres, Tailwind CSS)",
+      "Planejamento",
+      "Auto-motivação",
+      "Atenção aos detalhes",
+      "Conceito analítico",
+      "Resolução de problemas",
+      "Controle de qualidade",
+      "Habilidades analíticas"
+    ]
+  },
+  "us_eng": {
+    "personal_info": {"name": "ELIAS RODRIGUES DE OLIVEIRA FILHO", "email": "eliasr.of1986@gmail.com", "phone": "994724263", "linkedin": ""},
+    "summary": "Experienced nurse in project management, including clinical trials and team management. Fluent in English with technical management skills and ability to deliver high-quality projects.",
+    "experience": [
+      {
+        "company": "CUIDA Chagas/Fiocruz Project",
+        "role": "Clinical Trial Manager",
+        "period": "Oct/2021 - Oct/2022",
+        "bullets": [
+          "Managed an international multicenter clinical trial in Brazil, Colombia, and Bolivia.",
+          "Managed multimillion dollar health initiative budget.",
+          "Developed and implemented comprehensive control quality plans, risk management protocols and project management protocols.",
+          "Managed a multicultural team using agile methodologies.",
+          "Established standardized processes in three countries and managed the entire project lifecycle."
+        ]
+      },
+      {
+        "company": "Brazilian CIDP",
+        "role": "Senior Clinical Trial Analyst",
+        "period": "Nov/2020 - Oct/2021",
+        "bullets": [
+          "Supervised and structured teams for conducting dermatological studies with a focus on product safety and efficacy.",
+          "Senior expertise in drafting and managing all documentation according to GCP standards.",
+          "Expert translation skills for technical (scientific and regulatory) documents, ensuring accuracy and global/regulatory communication.",
+          "Analysis and follow-up of clinical trials."
+        ]
+      },
+      {
+        "company": "ReBEC/Fiocruz",
+        "role": "Review Manager",
+        "period": "Aug/2014 - Apr/2019",
+        "bullets": [
+          "Managed processes of clinical trial curation.",
+          "Managed a multidisciplinary team.",
+          "Customer demand resolution with omnichannel support.",
+          "Successful resolution of clinical trial backlog.",
+          "Development of Standard Operating Procedures and internal event coordination."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "IBMR, Rio de Janeiro",
+        "course": "Bachelor of Nursing",
+        "period": "2018"
+      }
+    ],
+    "skills": [
+      "Prompt Engineering",
+      "Vibe Coding (JS, Python, Flutter, Next.js, React, Postgres, Tailwind CSS)",
+      "Planning",
+      "Self-motivation",
+      "Attention to details",
+      "Analytical concept",
+      "Problem solving",
+      "Quality control",
+      "Analytical skills"
+    ]
+  }
+}

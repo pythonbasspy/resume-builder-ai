@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder ATS Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        /* Animação suave para o loader */
+        .pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <nav class="bg-white shadow-sm px-8 py-4 flex justify-between items-center">
+        <div class="font-bold text-xl text-indigo-600">ResumeBuilder<span class="text-slate-800">.ai</span></div>
+    </nav>
+
+    <main class="max-w-4xl mx-auto mt-10 p-6">
+        
+        <div id="uploadArea" class="bg-white rounded-xl shadow-sm border border-slate-200 p-10 text-center transition hover:border-indigo-400">
+            <h1 class="text-3xl font-bold mb-4">Otimize o seu Currículo para ATS</h1>
+            <p class="text-slate-500 mb-8">Faça upload do seu PDF, DOCX, DOC, TXT ou RTF. A nossa IA extrai, reescreve com foco em resultados e gera versões em Português e Inglês.</p>
+            
+            <input type="file" id="fileInput" class="hidden" accept=".pdf,.doc,.docx,.txt,.rtf">
+            <button onclick="document.getElementById('fileInput').click()" class="bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+                Selecionar Arquivo
+            </button>
+        </div>
+
+        <div id="loadingArea" class="hidden text-center mt-20">
+            <div class="inline-block w-16 h-16 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-6"></div>
+            <h2 class="text-2xl font-semibold mb-2 pulse">Analisando e reescrevendo...</h2>
+            <p class="text-slate-500">A nossa IA (Qwen 2) está processando os seus dados localmente.<br>Isso pode demorar cerca de 2 a 3 minutos. Não feche a página.</p>
+        </div>
+
+        <div id="resumeView" class="hidden mt-8">
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex space-x-2">
+                    <button onclick="renderResume('pt_br')" id="btn-pt" class="px-4 py-2 rounded font-medium bg-indigo-600 text-white transition">Português</button>
+                    <button onclick="renderResume('us_eng')" id="btn-en" class="px-4 py-2 rounded font-medium bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition">English</button>
+                </div>
+                
+                <button onclick="downloadPDF()" id="btn-download" class="px-4 py-2 rounded font-medium bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center shadow-sm">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Baixar PDF
+                </button>
+            </div>
+
+            <div class="bg-white p-10 shadow-lg rounded border border-slate-200 min-h-[800px]" id="resumePaper">
+                </div>
+        </div>
+    </main>
+
+    <script>
+        let currentResumeData = null;
+        let currentLang = 'pt_br'; // Guarda o idioma atual para o nome do arquivo
+
+        document.getElementById('fileInput').addEventListener('change', async function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            document.getElementById('uploadArea').classList.add('hidden');
+            document.getElementById('loadingArea').classList.remove('hidden');
+
+            const formData = new FormData();
+            formData.append('document', file);
+
+            try {
+                const response = await fetch('http://localhost:8080/api/v1/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro do servidor: ${response.statusText}`);
+                }
+
+                currentResumeData = await response.json();
+                
+                document.getElementById('loadingArea').classList.add('hidden');
+                document.getElementById('resumeView').classList.remove('hidden');
+                
+                renderResume('pt_br');
+
+            } catch (error) {
+                alert("Falha ao processar o currículo: " + error.message);
+                document.getElementById('loadingArea').classList.add('hidden');
+                document.getElementById('uploadArea').classList.remove('hidden');
+            }
+        });
+
+        function renderResume(lang) {
+            if (!currentResumeData || !currentResumeData[lang]) return;
+            
+            currentLang = lang;
+            const data = currentResumeData[lang];
+            const paper = document.getElementById('resumePaper');
+            
+            if (lang === 'pt_br') {
+                document.getElementById('btn-pt').className = "px-4 py-2 rounded font-medium bg-indigo-600 text-white transition";
+                document.getElementById('btn-en').className = "px-4 py-2 rounded font-medium bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition";
+            } else {
+                document.getElementById('btn-en').className = "px-4 py-2 rounded font-medium bg-indigo-600 text-white transition";
+                document.getElementById('btn-pt').className = "px-4 py-2 rounded font-medium bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition";
+            }
+
+            let html = `
+                <div class="border-b-2 border-slate-800 pb-4 mb-6">
+                    <h1 class="text-4xl font-bold uppercase tracking-tight text-slate-900">${data.personal_info?.name || 'Nome Não Encontrado'}</h1>
+                    <div class="mt-2 text-sm text-slate-600 flex flex-wrap gap-4">
+                        ${data.personal_info?.email ? `<span>✉ ${data.personal_info.email}</span>` : ''}
+                        ${data.personal_info?.phone ? `<span>☎ ${data.personal_info.phone}</span>` : ''}
+                        ${data.personal_info?.linkedin ? `<span>🔗 ${data.personal_info.linkedin}</span>` : ''}
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <p class="text-slate-700 leading-relaxed text-justify">${data.summary || ''}</p>
+                </div>
+            `;
+
+            if (data.experience && data.experience.length > 0) {
+                html += `
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold uppercase text-slate-800 border-b border-slate-300 mb-3 pb-1">${lang === 'pt_br' ? 'Experiência Profissional' : 'Professional Experience'}</h2>
+                `;
+                data.experience.forEach(exp => {
+                    html += `
+                        <div class="mb-4">
+                            <div class="flex justify-between items-baseline">
+                                <h3 class="font-bold text-slate-900">${exp.role || ''}</h3>
+                                <span class="text-sm font-medium text-slate-500">${exp.period || ''}</span>
+                            </div>
+                            <div class="text-slate-700 font-medium mb-1">${exp.company || ''}</div>
+                            <ul class="list-disc list-outside ml-5 text-slate-700 space-y-1 text-sm text-justify">
+                                ${(exp.bullets || []).map(bullet => `<li>${bullet}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            if (data.education && data.education.length > 0) {
+                html += `
+                    <div class="mb-6">
+                        <h2 class="text-xl font-bold uppercase text-slate-800 border-b border-slate-300 mb-3 pb-1">${lang === 'pt_br' ? 'Formação Acadêmica' : 'Education'}</h2>
+                `;
+                data.education.forEach(edu => {
+                    html += `
+                        <div class="mb-2">
+                            <div class="flex justify-between items-baseline">
+                                <h3 class="font-bold text-slate-900">${edu.course || ''}</h3>
+                                <span class="text-sm font-medium text-slate-500">${edu.period || ''}</span>
+                            </div>
+                            <div class="text-slate-700">${edu.institution || ''}</div>
+                        </div>
+                    `;
+                });
+                html += `</div>`;
+            }
+
+            if (data.skills && data.skills.length > 0) {
+                html += `
+                    <div>
+                        <h2 class="text-xl font-bold uppercase text-slate-800 border-b border-slate-300 mb-3 pb-1">${lang === 'pt_br' ? 'Competências' : 'Skills'}</h2>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            ${data.skills.map(skill => `<span class="bg-slate-100 text-slate-700 px-3 py-1 text-sm rounded-full font-medium">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            paper.innerHTML = html;
+        }
+
+        // Função que gera o PDF
+        function downloadPDF() {
+            const element = document.getElementById('resumePaper');
+            const btn = document.getElementById('btn-download');
+            
+            // Pega o nome do usuário para o arquivo (ou usa um padrão)
+            let userName = "Usuario";
+            if (currentResumeData && currentResumeData[currentLang] && currentResumeData[currentLang].personal_info?.name) {
+                userName = currentResumeData[currentLang].personal_info.name.replace(/\s+/g, '_');
+            }
+            const fileName = `Curriculo_${userName}_${currentLang.toUpperCase()}.pdf`;
+
+            // Configurações do gerador de PDF
+            const opt = {
+                margin:       10, // Margem de 10mm
+                filename:     fileName,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true }, // scale 2 melhora a resolução do texto
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Feedback visual no botão
+            const originalText = btn.innerHTML;
+            btn.innerHTML = 'Gerando PDF...';
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // Gera e salva
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restaura o botão
+                btn.innerHTML = originalText;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            });
+        }
+    </script>
+</body>
+</html>

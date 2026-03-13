@@ -1,0 +1,25 @@
+# Framework da API e servidor
+fastapi==0.110.0
+uvicorn==0.28.0
+python-multipart==0.0.9
+
+# Leitura de PDFs
+pymupdf
+
+# Leitura de DOCX
+python-docx==1.1.0
+
+# Leitura de RTF
+striprtf==0.0.26
+
+
+
+
+
+
+
+
+
+
+
+
